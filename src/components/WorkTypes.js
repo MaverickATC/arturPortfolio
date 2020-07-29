@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import { makeStyles, Grid, Typography, Button, Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -78,6 +79,7 @@ const useStyles = makeStyles(theme => ({
 
 export const WorkTypes = () => {
     const classes = useStyles();
+    const history = useHistory();
     return (
         <main className={classes.wt_wrapper} id="w">
             <Grid container direction="column" spacing={0}>
@@ -87,7 +89,14 @@ export const WorkTypes = () => {
                         <Box component="section" className={classes.text_grid}>
                             <Typography variant="h4" color="textPrimary" className={classes.grid_header}>Зйомка інтер'єрів</Typography>
                             <Typography variant="body1" color="textSecondary" className={classes.grid_text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</Typography>
-                            <Button variant="outlined" color="primary" className={classes.button}>Дізнатися більше</Button>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              className={classes.button}
+                              onClick={()=>history.push('/gallery/interiors')}
+                            >
+                                Дізнатися більше
+                            </Button>
                         </Box>
                     </Grid>
                 </Grid>
@@ -96,7 +105,14 @@ export const WorkTypes = () => {
                         <Box component="section" className={classes.text_grid}>
                             <Typography variant="h4" color="textPrimary" className={classes.grid_header}>Зйомка нерухомості</Typography>
                             <Typography variant="body1" color="textSecondary" className={classes.grid_text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</Typography>
-                            <Button variant="outlined" color="primary" className={classes.button}>Дізнатися більше</Button>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              className={classes.button}
+                              onClick={()=>history.push('/gallery/buildings')}
+                            >
+                                Дізнатися більше
+                            </Button>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6} component="img" src="https://via.placeholder.com/500.png" alt="" className={classes.image_item} />
@@ -107,7 +123,14 @@ export const WorkTypes = () => {
                         <Box component="section" className={classes.text_grid}>
                             <Typography variant="h4" color="textPrimary" className={classes.grid_header}>Аерозйомка</Typography>
                             <Typography variant="body1" color="textSecondary" className={classes.grid_text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</Typography>
-                            <Button variant="outlined" color="primary" className={classes.button}>Дізнатися більше</Button>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              className={classes.button}
+                              onClick={()=>history.push('/gallery/aerial')}
+                            >
+                                Дізнатися більше
+                            </Button>
                         </Box>
                     </Grid>
                 </Grid>
@@ -116,7 +139,14 @@ export const WorkTypes = () => {
                         <Box component="section" className={classes.text_grid}>
                             <Typography variant="h4" color="textPrimary" className={classes.grid_header}>Відеомонтаж</Typography>
                             <Typography variant="body1" color="textSecondary" className={classes.grid_text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</Typography>
-                            <Button variant="outlined" color="primary" className={classes.button}>Дізнатися більше</Button>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              className={classes.button}
+                              onClick={()=>history.push('/gallery/video')}
+                            >
+                                Дізнатися більше
+                            </Button>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6} component="img" src="https://via.placeholder.com/500.png" alt="" className={classes.image_item} />

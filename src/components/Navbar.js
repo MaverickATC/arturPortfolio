@@ -1,85 +1,123 @@
-import React, { useState } from 'react';
-import { makeStyles, Grid, Hidden, IconButton, Drawer, Divider, List, ListItem } from '@material-ui/core';
+import React, {useState} from 'react';
+import {makeStyles, Hidden, IconButton, Drawer, Divider, List, ListItem} from '@material-ui/core';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import DragHandleOutlinedIcon from '@material-ui/icons/DragHandleOutlined';
-import { NavLink } from 'react-router-dom';
-import { Social } from './Social';
+import {NavLink} from 'react-router-dom';
+import {Social} from './Social';
 
 const useStyles = makeStyles((theme) => ({
-    links: {
-        color: theme.palette.secondary.main,
-        fontFamily: 'Lato',
-        fontWeight: '400',
-        textDecoration: 'none',
-        marginRight: '1.5rem',
+  navbarWrapper: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: '100%',
+    '@media (max-width: 959px)': {
+      justifyContent: 'space-between',
     },
-    links_active: {
-        color: theme.palette.textPrimary.main,
-        fontFamily: 'Lato',
-        fontWeight: '700',
-        textDecoration: 'none',
-        marginRight: '1.5rem',
-    }
+  },
+  linksWrapper: {
+    display: "flex",
+    justifyContent: "flex-start",
+    width: '400px',
+  },
+  iconWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  socialWrapper: {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: '400px',
+  },
+  collapsedWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
+    width: '200px',
+  },
+  links: {
+    color: theme.palette.secondary.main,
+    fontFamily: 'Lato',
+    fontWeight: '400',
+    textDecoration: 'none',
+    marginRight: '1.5rem',
+  },
+  links_active: {
+    color: theme.palette.textPrimary.main,
+    fontFamily: 'Lato',
+    fontWeight: '700',
+    textDecoration: 'none',
+    marginRight: '1.5rem',
+  },
+  divider: {
+    margin: '0.75rem 0 1.5rem',
+  }
 }));
 
 export const Navbar = () => {
-    const classes = useStyles();
-    const [isOpen, setOpen] = useState(false);
+  const classes = useStyles();
+  const [isOpen, setOpen] = useState(false);
 
-    const toggleDrawer = () => {
-        setOpen(!isOpen);
-    }
+  const toggleDrawer = () => {
+    setOpen(!isOpen);
+  }
 
-    return (
-        <>
-            <Hidden smDown>
-                <Grid item xs={false} md={5} component="nav">
-                    <NavLink to="/" exact className={classes.links} activeClassName={classes.links_active}>Головна</NavLink>
-                    <NavLink to="/1" className={classes.links} activeClassName={classes.links_active}>Галерея</NavLink>
-                    <NavLink to="/contacts" className={classes.links} activeClassName={classes.links_active}>Контакти</NavLink>
-                </Grid>
-            </Hidden>
-            <Grid item xs={6} md={2} style={{ textAlign: 'center' }}>
-                <PhotoCameraOutlinedIcon color="primary" />
-            </Grid>
-            <Hidden mdUp>
-                <Grid item xs={6} style={{ textAlign: 'center' }}>
-                    <IconButton onClick={toggleDrawer}>
-                        <DragHandleOutlinedIcon />
-                    </IconButton>
-                    <Drawer anchor="left" open={isOpen} onClose={toggleDrawer} style={{ background: '#f8f6f4'}}>
-                                <PhotoCameraOutlinedIcon color="primary" style={{margin:'2rem auto'}} />
-                        <Grid container direction="column" alignItems="flex-start" style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
-                            <Grid item component="nav">
-                                <List>
-                                    <ListItem>
-                                        <NavLink to="/" exact className={classes.links} activeClassName={classes.links_active}>Головна</NavLink>
-                                    </ListItem>
-                                </List>
-                                <List>
-                                    <ListItem>
-                                        <NavLink to="/1" className={classes.links} activeClassName={classes.links_active}>Галерея</NavLink>
-                                    </ListItem>
-                                </List>
-                                <List>
-                                    <ListItem>
-                                        <NavLink to="/contacts" className={classes.links} activeClassName={classes.links_active}>Контакти</NavLink>
-                                    </ListItem>
-                                </List>
-                                <Divider />
-                            </Grid>
-                            <Grid item container direction="row" justify="center" spacing={1} style={{ paddingTop: '2rem' }}>
-                                <Social color="primary" />
-                            </Grid>
-                        </Grid>
-                    </Drawer>
-                </Grid>
-            </Hidden>
-            <Hidden smDown>
-                <Grid item container justify="flex-end" spacing={2} xs={false} md={5} style={{ textAlign: 'center' }}>
-                    <Social color="secondary" />
-                </Grid>
-            </Hidden>
-        </>
-    )
+  return (
+    <nav className={classes.navbarWrapper}>
+      <Hidden smDown>
+        <div className={classes.linksWrapper}>
+          <NavLink to="/" exact className={classes.links}
+                   activeClassName={classes.links_active}>Головна</NavLink>
+          <NavLink to="/gallery" className={classes.links} activeClassName={classes.links_active}>Галерея</NavLink>
+          <NavLink to="/contacts" className={classes.links}
+                   activeClassName={classes.links_active}>Контакти</NavLink>
+        </div>
+      </Hidden>
+      <div className={classes.iconWrapper}>
+        <PhotoCameraOutlinedIcon color="primary"/>
+      </div>
+      <Hidden smDown>
+        <div className={classes.socialWrapper}>
+          <Social color="secondary"/>
+        </div>
+      </Hidden>
+      <Hidden mdUp>
+        <IconButton onClick={toggleDrawer}>
+          <DragHandleOutlinedIcon/>
+        </IconButton>
+        <Drawer anchor="left" open={isOpen} onClose={toggleDrawer} style={{background: '#f8f6f4'}}>
+          <div className={classes.collapsedWrapper}>
+            <PhotoCameraOutlinedIcon color="primary" style={{margin: '2rem auto'}}/>
+            <nav>
+              <List>
+                <ListItem>
+                  <NavLink to="/" exact className={classes.links}
+                           activeClassName={classes.links_active}>Головна</NavLink>
+                </ListItem>
+
+
+                <ListItem>
+                  <NavLink to="/gallery" className={classes.links}
+                           activeClassName={classes.links_active}>Галерея</NavLink>
+                </ListItem>
+
+                <ListItem>
+                  <NavLink to="/contacts" className={classes.links}
+                           activeClassName={classes.links_active}>Контакти</NavLink>
+                </ListItem>
+              </List>
+
+              <Divider className={classes.divider}/>
+
+              <Social color="primary"/>
+            </nav>
+          </div>
+        </Drawer>
+
+
+      </Hidden>
+    </nav>
+  )
 }
