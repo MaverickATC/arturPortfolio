@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     background: '#f8f6f4',
     width: '100%',
-    backgroundImage: `linear-gradient(to right, rgba(255,255,255,.85), rgba(255,255,255,.85)), url(${bg})`,
+    // backgroundImage: `linear-gradient(to right, rgba(255,255,255,.85), rgba(255,255,255,.85)), url(${bg})`,
+    backgroundImage: `linear-gradient(to right, rgba(255,255,255,.85), rgba(255,255,255,.85))`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center 78%',
@@ -87,18 +88,11 @@ export const GalleryPage = (props) => {
           <Tab label="Відеомонтаж"/>
         </Tabs>
 
-        <TabPanel value={selectedTab} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={selectedTab} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={selectedTab} index={2}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={selectedTab} index={3}>
-          Item Four
-        </TabPanel>
+        <TabPanel value={selectedTab} index={0} path="buildings" />
+
+        <TabPanel value={selectedTab} index={1} path="buildings"/>
+        <TabPanel value={selectedTab} index={2} path="aerial"/>
+        <TabPanel value={selectedTab} index={3} path="buildings" />
     </div>
   );
 }
