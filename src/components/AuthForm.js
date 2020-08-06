@@ -30,7 +30,7 @@ const useStyle = makeStyles({
 export const AuthForm = () => {
   const classes = useStyle();
   const history = useHistory();
-  const {register, handleSubmit, errors, formState, reset} = useForm();
+  const {register, handleSubmit, errors, formState} = useForm();
 
   const auth = useContext(AuthContext);
 

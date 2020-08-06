@@ -32,7 +32,7 @@ export const useAuth = () => {
     } else {
       logout();
     }
-  }, [login]);
+  }, [login, logout]);
 
   return {login, logout, token};
 };

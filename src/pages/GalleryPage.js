@@ -1,8 +1,12 @@
-import React from 'react';
-import {makeStyles, Tab, Tabs, TabScrollButton} from "@material-ui/core";
-import bg from "../assets/bg3.jpeg";
+import React, {useCallback, useEffect, useState} from 'react';
+import {Box, makeStyles, Tab, Tabs, CircularProgress} from "@material-ui/core";
+// import bg from "../assets/bg3.jpeg";
 import {Navbar} from "../components/Navbar";
-import {TabPanel} from "../components/TabPanel";
+
+import {storage} from "../firebase/firebase";
+import Gallery from "react-photo-gallery";
+import Carousel, {Modal, ModalGateway} from "react-images";
+import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +40,14 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center"
+  },
+  gallery: {
+    display: "flex",
+    padding: '0.5rem',
+    img: {
+      width: '150px',
+      height: '150px'
+    }
   }
 }))
 
@@ -58,41 +70,87 @@ export const GalleryPage = (props) => {
     video: 3
   };
 
-  const [selectedTab, setSelectedTab] = React.useState(indexToTabName[page]);
+  const [selectedTab, setSelectedTab] = useState(indexToTabName[page]);
 
   const handleChange = (event, newValue) => {
     history.push(`/gallery/${tabNameToIndex[newValue]}`);
     setSelectedTab(newValue);
   };
 
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = useCallback(async (page) => {
+    setLoading(true);
+    let im = [];
+    const listRef = storage.ref().child(`photos/${page}`);
+    const response = await listRef.listAll();
+    for (const imageRef of response.items) {
+      const result = await imageRef.getDownloadURL();
+      im.push({
+        src: result,
+        width: 1,
+        height: 1
+      });
+    }
+    setPhotos(im);
+    setLoading(false);
+  }, [])
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
+
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+  const openLightbox = useCallback((event, {photo, index}) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
+
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
+
   const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
-      <Navbar />
+      <Navbar/>
+      <Tabs
+        value={selectedTab}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        style={{margin: '50px 0 30px 0'}}
+      >
+        <Tab label="Інтер'єри"/>
+        <Tab label="Нерухомість"/>
+        <Tab label="Аерозйомка"/>
+        <Tab label="Відеомонтаж"/>
+      </Tabs>
 
-
-        <Tabs
-          value={selectedTab}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-
-          variant="scrollable"
-          scrollButtons="auto"
-          style={{margin: '50px 0'}}
-        >
-          <Tab label="Інтер'єри"/>
-          <Tab label="Нерухомість"/>
-          <Tab label="Аерозйомка"/>
-          <Tab label="Відеомонтаж"/>
-        </Tabs>
-
-        <TabPanel value={selectedTab} index={0} path="buildings" />
-
-        <TabPanel value={selectedTab} index={1} path="buildings"/>
-        <TabPanel value={selectedTab} index={2} path="aerial"/>
-        <TabPanel value={selectedTab} index={3} path="buildings" />
+      <Box p={3} style={{padding: '0'}}>
+        {loading ? <CircularProgress color={"secondary"}/> :
+          <Gallery photos={photos} onClick={openLightbox}
+                   className={classes.gallery} margin={20}/>}
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={photos.map(x => ({
+                  ...x,
+                  srcset: x.srcSet,
+                  caption: x.title
+                }))}
+              />
+            </Modal>
+          ) : null}
+        </ModalGateway>
+      </Box>
     </div>
   );
 }
