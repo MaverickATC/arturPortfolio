@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/">
             <HomePage/>
           </Route>
-          <Redirect exact from="/gallery" to="gallery/aerial"/>
+          <Redirect exact from="/gallery" to="gallery/interiors"/>
           <Route exact path="/gallery/:page?" render={props => <GalleryPage {...props}/>}/>
           <Route exact path="/contacts">
             <ContactsPage/>

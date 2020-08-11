@@ -1,12 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Box, makeStyles, Tab, Tabs, CircularProgress} from "@material-ui/core";
-// import bg from "../assets/bg3.jpeg";
 import {Navbar} from "../components/Navbar";
-
-import {storage} from "../firebase/firebase";
+import {projectFirestore} from "../firebase/firebase";
 import Gallery from "react-photo-gallery";
 import Carousel, {Modal, ModalGateway} from "react-images";
-import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     background: '#f8f6f4',
     width: '100%',
-    // backgroundImage: `linear-gradient(to right, rgba(255,255,255,.85), rgba(255,255,255,.85)), url(${bg})`,
     backgroundImage: `linear-gradient(to right, rgba(255,255,255,.85), rgba(255,255,255,.85))`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -80,25 +76,27 @@ export const GalleryPage = (props) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = useCallback(async (page) => {
-    setLoading(true);
-    let im = [];
-    const listRef = storage.ref().child(`photos/${page}`);
-    const response = await listRef.listAll();
-    for (const imageRef of response.items) {
-      const result = await imageRef.getDownloadURL();
-      im.push({
-        src: result,
-        width: 1,
-        height: 1
-      });
-    }
-    setPhotos(im);
-    setLoading(false);
-  }, [])
-
   useEffect(() => {
-    fetchData(page);
+    // fetchData(page);
+    setLoading(true);
+    projectFirestore.collection(page).onSnapshot(
+      snap=>{
+        let documents = [];
+        snap.forEach(
+          doc => {
+            documents.push({
+              ...doc.data(),
+              id: doc.id,
+              width: 1,
+              height: 1
+            })
+          }
+        )
+        setPhotos(documents);
+      }
+    )
+    setLoading(false);
+
   }, [page]);
 
   const [currentImage, setCurrentImage] = useState(0);

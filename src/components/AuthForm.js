@@ -9,7 +9,7 @@ import {AuthContext} from "../context/AuthContext";
 const useStyle = makeStyles({
   form: {
     maxWidth: '30%',
-    margin: ''
+    margin: '0 auto'
   },
   input: {
     width: '100%',

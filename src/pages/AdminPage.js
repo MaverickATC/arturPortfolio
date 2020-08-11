@@ -1,7 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {AuthForm} from "../components/AuthForm";
 import {AuthContext} from "../context/AuthContext";
+import {AddImage} from "../components/AddImage";
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +24,7 @@ export const AdminPage = () => {
     <div className={classes.root}>
       {
         auth.isAuthenticated ?
-          <button onClick={auth.logout}>logOut</button>
+          <AddImage/>
           :
           <AuthForm/>
       }
