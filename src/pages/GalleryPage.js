@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Box, makeStyles, Tab, Tabs, CircularProgress} from "@material-ui/core";
+import {Box, makeStyles, Tab, Tabs,Typography, CircularProgress} from "@material-ui/core";
 import {Navbar} from "../components/Navbar";
 import {projectFirestore} from "../firebase/firebase";
 import Gallery from "react-photo-gallery";
@@ -77,10 +77,9 @@ export const GalleryPage = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // fetchData(page);
     setLoading(true);
     projectFirestore.collection(page).onSnapshot(
-      snap=>{
+      snap => {
         let documents = [];
         snap.forEach(
           doc => {
@@ -131,9 +130,26 @@ export const GalleryPage = (props) => {
       </Tabs>
 
       <Box p={3} style={{padding: '0'}}>
-        {loading ? <CircularProgress color={"secondary"}/> :
-          <Gallery photos={photos} onClick={openLightbox}
-                   className={classes.gallery} margin={20}/>}
+        {
+          loading
+            ?
+            <CircularProgress color={"secondary"}/>
+            :
+            <>
+              {
+                photos.length > 0
+                  ?
+                  <Gallery
+                    photos={photos}
+                    onClick={openLightbox}
+                    className={classes.gallery}
+                    margin={20}
+                  />
+                  :
+                  <Typography variant={"h3"} color={"primary"}>Немає фото</Typography>
+              }
+            </>
+        }
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>

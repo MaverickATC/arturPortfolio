@@ -29,9 +29,8 @@ function App() {
           <Route exact path="/contacts">
             <ContactsPage/>
           </Route>
-          <Route exact path="/admin">
-            <AdminPage/>
-          </Route>
+          <Redirect exact from="/admin" to="admin/add"/>
+          <Route exact path="/admin/:page?" render={props => <AdminPage {...props}/>}/>
           <Redirect to="/"/>
         </Switch>
       </BrowserRouter>

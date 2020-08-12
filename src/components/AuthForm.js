@@ -8,8 +8,12 @@ import {AuthContext} from "../context/AuthContext";
 
 const useStyle = makeStyles({
   form: {
-    maxWidth: '30%',
-    margin: '0 auto'
+    margin: '0 auto',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    minWidth: '30%',
   },
   input: {
     width: '100%',
@@ -98,10 +102,12 @@ export const AuthForm = () => {
             pattern: /^[A-Za-z\d,._]{8,}$/
           })}
         />
-        <Button variant="outlined" color="primary" className={classes.button} type="submit">Вхід</Button>
-        <Button variant="contained" color="primary" className={classes.button} onClick={() => {
-          history.push('/')
-        }}>Головна</Button>
+        <div>
+          <Button variant="outlined" color="primary" className={classes.button} type="submit">Вхід</Button>
+          <Button variant="contained" color="primary" className={classes.button} onClick={() => {
+            history.push('/')
+          }}>Головна</Button>
+        </div>
       </form>
     </>
   )

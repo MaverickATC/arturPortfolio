@@ -17,22 +17,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import {ProgressBar} from "./ProgressBar";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: '100vh',
-    width: '100%',
-    background: '#fcfcfc',
-    textAlign: "center",
-  },
-  heading: {
-    display: "flex",
-    justifyContent: "flex-end",
-
-    '& button': {
-      marginRight: theme.spacing(2)
-    }
-  },
   addForm: {
     width: '30%',
     height: '100%',
@@ -109,31 +93,12 @@ export const AddImage = (props) => {
   }
 
   const finishUpload = () => {
-    setStartUpload(false);
     setFiles([]);
+    setStartUpload(false);
   }
 
   return (
-    <Box className={classes.root}>
-      <AppBar position={"static"}>
-        <Toolbar className={classes.heading}>
-          <Button
-            onClick={() => {
-              history.push('/')
-            }}
-          >
-            HomePage
-          </Button>
-          <Button
-            variant={"contained"}
-            color={"secondary"}
-            onClick={auth.logout}
-          >
-            LogOut
-          </Button>
-        </Toolbar>
-      </AppBar>
-
+    <>
       <Snackbar
         anchorOrigin={{vertical: 'top', horizontal: 'center'}}
         open={isMessageOpen}
@@ -179,7 +144,6 @@ export const AddImage = (props) => {
         </Button>
         {startUpload && <ProgressBar files={files} section={selectVal} finish={finishUpload}/>}
       </form>
-
-    </Box>
+    </>
   );
 }

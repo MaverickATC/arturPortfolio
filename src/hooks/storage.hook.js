@@ -19,7 +19,8 @@ export const useStorage = (files, section) => {
           const createdAt = timestamp();
           await collectionRef.add({
             src,
-            createdAt
+            createdAt,
+            filename: file.name
           });
           // setUrl(url);
           setLoading(false);

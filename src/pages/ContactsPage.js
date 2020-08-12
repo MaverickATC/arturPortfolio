@@ -72,9 +72,9 @@ export const ContactsPage = () => {
                 <LocalPhoneRoundedIcon/>
               </Grid>
               <Grid item>
-                <Typography variant="h6" color="textSecondary" component="a" href="tel:+38 095 113 85 98"
+                <Typography variant="h6" color="textSecondary" component="a" href="tel:+380954794967"
                             className={classes.link}>
-                  +38 095 123 45 67
+                  +38 095 479 49 67
                 </Typography>
               </Grid>
             </Grid>
@@ -86,7 +86,7 @@ export const ContactsPage = () => {
                 </a>
               </Grid>
               <Grid item>
-                <a href="/" target="_blank" rel="noopener noreferrer">
+                <a href="https://t.me/Artur_voznenko" target="_blank" rel="noopener noreferrer">
                   <img src={tlg} alt="telegram" width='24' height='24'/>
                 </a>
               </Grid>
